@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copy for the Laravel Development service page.
+ *
+ * A child of Web Development: same five sections, aimed at the visitor who
+ * has already decided the answer is an application rather than a website.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame' => 'browser',
+	'screen_start' => 1,
+
+	'hero' => array(
+		'eyebrow'  => 'Laravel Development',
+		'headline' => 'Custom Laravel Applications for Growing Businesses',
+		'lede'     => 'When spreadsheets and off-the-shelf tools stop fitting, we build the platform that does: multi-user, permission-aware, and shaped around how your business actually runs.',
+		'trust'    => array( 'Laravel', 'MySQL', 'REST APIs', 'Dashboards', 'Multi-role Access' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Build in Laravel',
+		'lede'    => 'Applications with real users behind a login — where the value is the workflow, not the marketing page.',
+		'items'   => array(
+			array(
+				'icon'  => 'window',
+				'title' => 'Business Platforms',
+				'desc'  => 'The system your team runs the day on: orders, jobs, stock, approvals.',
+				'pills' => array( 'Laravel', 'MySQL' ),
+			),
+			array(
+				'icon'  => 'check-chart',
+				'title' => 'Admin Dashboards',
+				'desc'  => 'The numbers that matter, filtered and exportable, without a data analyst.',
+				'pills' => array( 'Reports', 'Exports' ),
+			),
+			array(
+				'icon'  => 'clipboard',
+				'title' => 'CRM & ERP Modules',
+				'desc'  => 'Customers, pipeline, invoicing and inventory — only the parts you need.',
+				'pills' => array( 'CRM', 'Invoicing' ),
+			),
+			array(
+				'icon'  => 'plug',
+				'title' => 'REST APIs',
+				'desc'  => 'The backend your mobile app, website or partner systems talk to.',
+				'pills' => array( 'REST', 'Tokens' ),
+			),
+			array(
+				'icon'  => 'globe',
+				'title' => 'Customer Portals',
+				'desc'  => 'Let clients track orders, download invoices and raise requests themselves.',
+				'pills' => array( 'Roles', 'Self-service' ),
+			),
+			array(
+				'icon'  => 'cart',
+				'title' => 'Marketplaces & Booking',
+				'desc'  => 'Multi-vendor, multi-branch and scheduling systems with payments attached.',
+				'pills' => array( 'Payments', 'Multi-vendor' ),
+			),
+			array(
+				'icon'  => 'sparkle',
+				'title' => 'AI Features',
+				'desc'  => 'Assistants, smart search and document processing inside your own app.',
+				'pills' => array( 'OpenAI', 'Queues' ),
+			),
+			array(
+				'icon'  => 'server',
+				'title' => 'Rescue & Refactor',
+				'desc'  => 'Take over an inherited Laravel codebase, stabilise it, then move it forward.',
+				'pills' => array( 'Upgrades', 'Tests' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Interfaces Your Team Will Live In',
+		'lede'    => 'An internal tool is used for hours a day. It gets the same design attention as the public site — arguably more.',
+		'labels'  => array( 'Dashboard', 'Records', 'Reports', 'Settings', 'Portal', 'Billing' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Build It',
+		'lede'    => 'Five stages, a staging URL from week one, and a scope agreed in writing before development starts.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Discovery', 'desc' => 'Map the current process, the roles involved and where the time goes.' ),
+			array( 'no' => '02', 'title' => 'Architecture', 'desc' => 'Data model, permissions and the release order of features.' ),
+			array( 'no' => '03', 'title' => 'Development', 'desc' => 'Built in slices you can use, demoed weekly on staging.' ),
+			array( 'no' => '04', 'title' => 'Testing & Launch', 'desc' => 'Data migration, user testing, deployment and staff walkthrough.' ),
+			array( 'no' => '05', 'title' => 'Support', 'desc' => 'Monitoring, backups, upgrades and the next set of features.' ),
+		),
+		'stack'   => array(
+			'lede'  => 'The stack behind a Laravel build.',
+			'items' => array( 'laravel', 'php', 'mysql', 'react-native', 'javascript', 'node', 'ai' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Describe the Process You Want to Fix',
+		'lede'    => 'Tell us what your team does by hand, in spreadsheets, or across three systems that do not talk. We will come back with what an application would replace, what it would cost and what it would not solve.',
+		'points'  => array(
+			array( 'title' => 'Built around your process', 'desc' => 'We fit the software to the business, not the business to the software.' ),
+			array( 'title' => 'You own the code', 'desc' => 'Your repository, your server, your data — no licence to keep paying.' ),
+			array( 'title' => 'Room to grow', 'desc' => 'Structured so the second and third module do not mean starting over.' ),
+		),
+	),
+
+	'faq_heading' => 'Laravel Development FAQs',
+
+	'cta' => array(
+		'heading' => 'Outgrown Your Spreadsheets?',
+		'text'    => 'Tell us how the work flows today. We will scope the application that replaces it — with a fixed price and a staged rollout.',
+		'button'  => 'Start Your Laravel Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Why Laravel rather than WordPress?',
+			'a' => 'WordPress is a content management system: excellent for pages, posts and stores. Laravel is an application framework: it is the right tool when the product is logins, roles, business rules, calculations and workflows. Forcing that into WordPress with plugins is where projects become unmaintainable.',
+		),
+		array(
+			'q' => 'How much does a Laravel application cost?',
+			'a' => 'It depends on the number of user roles, modules, integrations and how much existing data has to be migrated. We scope it first, then quote a fixed price per stage so you can start with one module and add the rest later.',
+		),
+		array(
+			'q' => 'Can you take over an existing Laravel project?',
+			'a' => 'Yes. We start with an audit — version, dependencies, tests, security, obvious debt — and give you an honest report on whether it is better to continue with it or rebuild the core. Then we stabilise before adding features.',
+		),
+		array(
+			'q' => 'Can it connect to my website or mobile app?',
+			'a' => 'Yes. That is usually the design: Laravel holds the data and the rules, and exposes REST APIs that your WordPress site, mobile app or partner systems use.',
+		),
+		array(
+			'q' => 'Who owns the code and the data?',
+			'a' => 'You do. The code goes in your repository and the application runs on your hosting. There is no per-seat licence and no lock-in to us.',
+		),
+		array(
+			'q' => 'Can we start small?',
+			'a' => 'Yes, and we recommend it. Pick the one process that costs the most time, ship that module, get your team using it, then decide what comes next based on real use.',
+		),
+	),
+);

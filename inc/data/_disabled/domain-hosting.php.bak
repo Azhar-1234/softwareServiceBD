@@ -1,0 +1,147 @@
+<?php
+/**
+ * Copy for the Domain & Hosting service page.
+ *
+ * No technology logo wall on this one: hosting is not sold on a framework,
+ * and naming vendors we do not have a formal relationship with would be a
+ * claim rather than a fact. The stack key is left empty and the layout skips
+ * that block.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame'        => 'browser',
+	'screen_start' => 1,
+
+	'hero' => array(
+		'eyebrow'  => 'Domain & Hosting',
+		'headline' => 'Domain, Hosting and Email — Set Up Once, Looked After',
+		'lede'     => 'The unglamorous layer everything else sits on: the right host for your traffic, business email that lands in inboxes, SSL, DNS and backups — configured properly and then monitored.',
+		'trust'    => array( 'Domains', 'Managed Hosting', 'Business Email', 'SSL', 'Backups' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Set Up',
+		'lede'    => 'Everything is set up on accounts in your name. You keep the logins and the billing — we do the work and hand over the keys.',
+		'items'   => array(
+			array(
+				'icon'  => 'globe',
+				'title' => 'Domain Registration',
+				'desc'  => 'Register or transfer, in your name, with the renewals and privacy set up right.',
+				'pills' => array( '.com', '.com.bd' ),
+			),
+			array(
+				'icon'  => 'server',
+				'title' => 'Hosting Selection & Setup',
+				'desc'  => 'A host matched to your traffic and stack, configured rather than just bought.',
+				'pills' => array( 'Shared', 'VPS', 'Cloud' ),
+			),
+			array(
+				'icon'  => 'chat',
+				'title' => 'Business Email',
+				'desc'  => 'you@yourcompany.com, with the DNS records that keep it out of spam.',
+				'pills' => array( 'SPF', 'DKIM', 'DMARC' ),
+			),
+			array(
+				'icon'  => 'shield',
+				'title' => 'SSL & Security',
+				'desc'  => 'Certificates, firewall rules and sane server settings from day one.',
+				'pills' => array( 'HTTPS', 'Firewall' ),
+			),
+			array(
+				'icon'  => 'lines',
+				'title' => 'DNS Management',
+				'desc'  => 'Records set correctly — and explained, so nothing is a mystery later.',
+				'pills' => array( 'DNS', 'Subdomains' ),
+			),
+			array(
+				'icon'  => 'cloud',
+				'title' => 'Migration',
+				'desc'  => 'Move host or domain with the site tested on staging first and email intact.',
+				'pills' => array( 'Zero downtime', 'Staging' ),
+			),
+			array(
+				'icon'  => 'doc',
+				'title' => 'Backups',
+				'desc'  => 'Off-site copies on a schedule, and a restore that has actually been tried.',
+				'pills' => array( 'Off-site', 'Tested' ),
+			),
+			array(
+				'icon'  => 'bolt',
+				'title' => 'Performance & CDN',
+				'desc'  => 'Caching, compression and a CDN so visitors far away get the site quickly.',
+				'pills' => array( 'CDN', 'Caching' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Set Up So You Can See What Is Happening',
+		'lede'    => 'Uptime, backups and certificate expiry should be visible facts, not a surprise on a Friday evening.',
+		'labels'  => array( 'Control panel', 'Site', 'Reports' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Do It',
+		'lede'    => 'Five stages, and a migration planned for the quietest hour of your week.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Assess', 'desc' => 'What you run now, what it costs, what breaks and what traffic you get.' ),
+			array( 'no' => '02', 'title' => 'Recommend', 'desc' => 'A host and plan matched to that, with the reasoning written down.' ),
+			array( 'no' => '03', 'title' => 'Set Up & Migrate', 'desc' => 'Build on staging, test, lower DNS TTL, then cut over out of hours.' ),
+			array( 'no' => '04', 'title' => 'Secure', 'desc' => 'SSL, email authentication, firewall, backups and access control.' ),
+			array( 'no' => '05', 'title' => 'Monitor', 'desc' => 'Uptime and certificate checks, with someone to call when they fire.' ),
+		),
+		'stack'   => array(
+			'lede'  => '',
+			'items' => array(),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Not Sure What You Are Paying For?',
+		'lede'    => 'Send us your current hosting bill and domain details. We will tell you what you are actually getting, whether it fits your traffic, and what moving would involve.',
+		'points'  => array(
+			array( 'title' => 'Accounts in your name', 'desc' => 'You own the domain and the hosting. We are not a middleman you have to keep.' ),
+			array( 'title' => 'No downtime migrations', 'desc' => 'Tested on staging, cut over at a quiet hour, old host kept live until it settles.' ),
+			array( 'title' => 'Plain-English recommendations', 'desc' => 'Why this host, this plan, this price — not a package name.' ),
+		),
+	),
+
+	'faq_heading' => 'Domain & Hosting FAQs',
+
+	'cta' => array(
+		'heading' => 'Slow Host or Expiring Domain?',
+		'text'    => 'Send us what you have now. We will assess it, recommend what fits, and handle the move without taking your site or email down.',
+		'button'  => 'Get a Hosting Review',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Do you sell hosting yourselves?',
+			'a' => 'No. We set your site up on a host chosen for your needs, on an account in your name, so you are never locked into us as a reseller. Some of the hosts we recommend run affiliate programmes and we may earn a commission — it does not change what we recommend, and it is disclosed on our affiliate page.',
+		),
+		array(
+			'q' => 'Which host should I use?',
+			'a' => 'It depends on traffic, whether the site is WordPress or a custom application, and where your visitors are. A small business site and a busy store want very different plans, and the most expensive option is rarely the right one.',
+		),
+		array(
+			'q' => 'Will moving hosts take my site offline?',
+			'a' => 'It should not. We build on the new host first, test it there, lower the DNS time-to-live in advance and cut over at a quiet hour, keeping the old host live until traffic has fully moved.',
+		),
+		array(
+			'q' => 'Can you set up business email?',
+			'a' => 'Yes — email on your own domain, with SPF, DKIM and DMARC records configured so your messages are not silently filed as spam. That last part is what most setups get wrong.',
+		),
+		array(
+			'q' => 'Who owns the domain?',
+			'a' => 'You do. It is registered to your business with your contact details. We will happily manage it, but ownership never sits with us — that is how businesses lose domains.',
+		),
+		array(
+			'q' => 'What does it cost?',
+			'a' => 'Hosting and domain fees are paid by you directly to the provider, at their price. We charge for the setup or migration work, quoted after we have seen what you are running.',
+		),
+	),
+);

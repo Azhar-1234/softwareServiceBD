@@ -1,0 +1,146 @@
+<?php
+/**
+ * Copy for the Web Development service page.
+ *
+ * Rendered by template-parts/services/service-page.php — the same five
+ * sections as the other service landing pages, in browser frames rather than
+ * phones. Laravel and WordPress have pages of their own; this one is the
+ * parent that sends people to whichever of them fits.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame' => 'browser',
+
+	'hero' => array(
+		'eyebrow'  => 'Web Development',
+		'headline' => 'Websites and Web Applications Built to Perform',
+		'lede'     => 'Fast, accessible, search-friendly websites — and the web applications behind them — built on Laravel and WordPress for businesses in Bangladesh and beyond.',
+		'trust'    => array( 'Laravel', 'WordPress', 'WooCommerce', 'Core Web Vitals', 'API Integration' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Build',
+		'lede'    => 'From a five-page business site to a multi-user platform — designed around the job the site has to do, not around a page builder.',
+		'items'   => array(
+			array(
+				'icon'  => 'window',
+				'title' => 'Business Websites',
+				'desc'  => 'The site your customers judge you by: fast, clear and written to convert.',
+				'pills' => array( 'WordPress', 'Custom theme' ),
+			),
+			array(
+				'icon'  => 'code',
+				'title' => 'Web Applications',
+				'desc'  => 'Laravel platforms with user roles, dashboards and workflows behind the login.',
+				'pills' => array( 'Laravel', 'MySQL' ),
+			),
+			array(
+				'icon'  => 'cart',
+				'title' => 'eCommerce Stores',
+				'desc'  => 'WooCommerce and custom commerce, wired to your payments and delivery.',
+				'pills' => array( 'WooCommerce', 'Payments' ),
+			),
+			array(
+				'icon'  => 'image',
+				'title' => 'Landing Pages',
+				'desc'  => 'Single pages built for one campaign and one action, ready to measure.',
+				'pills' => array( 'Conversion', 'A/B ready' ),
+			),
+			array(
+				'icon'  => 'bolt',
+				'title' => 'Speed & Core Web Vitals',
+				'desc'  => 'Rescue work on slow sites: real numbers before and after, not vague promises.',
+				'pills' => array( 'LCP', 'CLS', 'INP' ),
+			),
+			array(
+				'icon'  => 'chart',
+				'title' => 'Technical SEO Foundation',
+				'desc'  => 'Clean markup, schema, sitemaps and internal links built in from the start.',
+				'pills' => array( 'Schema', 'Sitemaps' ),
+			),
+			array(
+				'icon'  => 'plug',
+				'title' => 'API & System Integration',
+				'desc'  => 'Connect the site to your software, CRM, inventory or third-party services.',
+				'pills' => array( 'REST API', 'Webhooks' ),
+			),
+			array(
+				'icon'  => 'shield',
+				'title' => 'Care & Maintenance',
+				'desc'  => 'Updates, backups, monitoring and fixes once the site is live.',
+				'pills' => array( 'Backups', 'Monitoring' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Interfaces Designed for Real Use',
+		'lede'    => 'Marketing sites, admin dashboards and storefronts — designed as screens people have to use every day, not as pictures of a website.',
+		'labels'  => array( 'Marketing site', 'Dashboard', 'Storefront', 'Landing page', 'Portal', 'Checkout' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Build It',
+		'lede'    => 'Five stages, a working URL you can open from week one, and a fixed scope agreed before development starts.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Discovery', 'desc' => 'What the site has to achieve, who it is for and what exists already.' ),
+			array( 'no' => '02', 'title' => 'Structure & Design', 'desc' => 'Sitemap, page structure and interface — approved before any code.' ),
+			array( 'no' => '03', 'title' => 'Development', 'desc' => 'Custom build, content, integrations and the admin behind it.' ),
+			array( 'no' => '04', 'title' => 'Testing & Launch', 'desc' => 'Speed, devices, forms and search setup, then go live.' ),
+			array( 'no' => '05', 'title' => 'Support', 'desc' => 'Updates, monitoring, backups and the next round of improvements.' ),
+		),
+		'stack'   => array(
+			'lede'  => 'The stack we build the web on — chosen per project, not all at once.',
+			'items' => array( 'laravel', 'wordpress', 'woocommerce', 'php', 'mysql', 'react-native', 'ai' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Tell Us What the Site Has to Do',
+		'lede'    => 'Send the idea, the business problem or the site you already have. You get a scope, a timeline and a fixed price back — and an honest answer about whether a rebuild is even the right move.',
+		'points'  => array(
+			array( 'title' => 'Fixed scope, fixed price', 'desc' => 'Agreed before development starts, not discovered along the way.' ),
+			array( 'title' => 'Built, not assembled', 'desc' => 'A custom theme or application instead of a stack of page-builder plugins.' ),
+			array( 'title' => 'Yours to run', 'desc' => 'You get the admin, the code and a walkthrough — no lock-in.' ),
+		),
+	),
+
+	'faq_heading' => 'Web Development FAQs',
+
+	'cta' => array(
+		'heading' => 'Have a Website Project?',
+		'text'    => 'Tell us what you are trying to build or fix. We will come back with a scope, a timeline and a fixed price.',
+		'button'  => 'Start Your Web Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Should I use WordPress or Laravel?',
+			'a' => 'WordPress when the site is mostly content you want to edit yourself — marketing sites, blogs, WooCommerce stores. Laravel when the product is the application: logins, roles, workflows, calculations, dashboards. Plenty of projects use both, with Laravel behind the login and WordPress in front of it.',
+		),
+		array(
+			'q' => 'How much does a website cost?',
+			'a' => 'It depends on the number of pages, whether the design is custom, how much content has to be written or migrated, and what it integrates with. We scope first and quote a fixed price, so the number is agreed before development starts.',
+		),
+		array(
+			'q' => 'How long does it take?',
+			'a' => 'A focused business site is usually a few weeks; a store or a custom application takes longer. You get a stage-by-stage timeline with the quote and a working URL to watch from early on.',
+		),
+		array(
+			'q' => 'Do you use page builders like Elementor?',
+			'a' => 'Only when a client already runs one and wants to keep it. Left to us we build a custom theme: it loads faster, scores better on Core Web Vitals, and there is far less to break at update time.',
+		),
+		array(
+			'q' => 'Can you fix or speed up my existing site?',
+			'a' => 'Yes. We audit what is actually slow — images, plugins, hosting, render-blocking assets — and report the before-and-after numbers rather than a general claim that it is faster.',
+		),
+		array(
+			'q' => 'Will the site be good for SEO?',
+			'a' => 'The technical side is built in: clean semantic markup, structured data, fast loading, sitemaps and sensible internal links. That is the foundation — content and authority still have to be earned.',
+		),
+	),
+);

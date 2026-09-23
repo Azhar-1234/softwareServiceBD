@@ -1,0 +1,21 @@
+/*
+Theme Name: Software Service BD
+Theme URI: https://softwareservicebd.com
+Author: Software Service BD
+Author URI: https://softwareservicebd.com
+Description: Technology and digital solutions theme for Software Service BD — server-rendered PHP templates with React islands for interactivity, plus a full SEO, local-GEO and generative-engine (GEO/AEO) metadata layer.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ssbd
+Tags: business, portfolio, custom-colors, dark-mode, block-styles, wide-blocks
+*/
+
+/*
+  The compiled design system lives in assets/css/theme.css so it can be
+  cached and versioned independently. This file exists for the theme header
+  and for WordPress' expectation that style.css is present.
+*/

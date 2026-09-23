@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copy for the Website Maintenance & Support service page.
+ *
+ * Like the hosting page, no technology wall: this is sold on what gets done
+ * every month, not on a stack.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame'        => 'browser',
+	'screen_start' => 0,
+
+	'hero' => array(
+		'eyebrow'  => 'Maintenance & Support',
+		'headline' => 'Your Site, Looked After Every Month',
+		'lede'     => 'Updates, backups, security and someone who answers when something breaks — so the site you paid for is still fast, safe and working a year from now.',
+		'trust'    => array( 'Updates', 'Backups', 'Security', 'Uptime', 'Content Changes' ),
+	),
+
+	'build' => array(
+		'heading' => 'What a Care Plan Covers',
+		'lede'    => 'The work that keeps a site alive between projects — done on a schedule, and reported so you can see it happened.',
+		'items'   => array(
+			array(
+				'icon'  => 'clipboard',
+				'title' => 'Core & Plugin Updates',
+				'desc'  => 'Applied on staging first, so an update never takes the live site down.',
+				'pills' => array( 'Staging', 'Monthly' ),
+			),
+			array(
+				'icon'  => 'cloud',
+				'title' => 'Off-site Backups',
+				'desc'  => 'Kept away from your host, with a restore we have actually tested.',
+				'pills' => array( 'Off-site', 'Restorable' ),
+			),
+			array(
+				'icon'  => 'shield',
+				'title' => 'Security Monitoring',
+				'desc'  => 'Malware scanning, hardening, and clean-up if something does get through.',
+				'pills' => array( 'Scanning', 'Clean-up' ),
+			),
+			array(
+				'icon'  => 'bolt',
+				'title' => 'Uptime Monitoring',
+				'desc'  => 'We hear the site is down before your customers tell you.',
+				'pills' => array( '24/7 checks', 'Alerts' ),
+			),
+			array(
+				'icon'  => 'chart',
+				'title' => 'Speed Checks',
+				'desc'  => 'Core Web Vitals watched over time, not measured once at launch.',
+				'pills' => array( 'LCP', 'Reports' ),
+			),
+			array(
+				'icon'  => 'lines',
+				'title' => 'Content Updates',
+				'desc'  => 'A monthly allowance for the text, images and pages you need changed.',
+				'pills' => array( 'Edits', 'New pages' ),
+			),
+			array(
+				'icon'  => 'code',
+				'title' => 'Bug Fixes',
+				'desc'  => 'The broken form, the misaligned section, the plugin conflict — handled.',
+				'pills' => array( 'Fixes', 'Testing' ),
+			),
+			array(
+				'icon'  => 'chat',
+				'title' => 'Priority Support',
+				'desc'  => 'A named person to contact, with a response time you can hold us to.',
+				'pills' => array( 'Email', 'WhatsApp' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'You See What Was Done',
+		'lede'    => 'A monthly report: what was updated, what was backed up, how fast the site is and what we recommend next.',
+		'labels'  => array( 'Your site', 'Report', 'Uptime' ),
+	),
+
+	'process' => array(
+		'heading' => 'How It Works',
+		'lede'    => 'An audit first, then a routine. No long contract — the plan is worth keeping or it is not.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Audit', 'desc' => 'What version, what plugins, what is out of date and what is already broken.' ),
+			array( 'no' => '02', 'title' => 'Stabilise', 'desc' => 'Fix the urgent, set up backups, staging and monitoring.' ),
+			array( 'no' => '03', 'title' => 'Monthly Care', 'desc' => 'Updates on staging, security checks, speed checks, your content edits.' ),
+			array( 'no' => '04', 'title' => 'Report', 'desc' => 'A plain summary each month of what was done and what it found.' ),
+			array( 'no' => '05', 'title' => 'Improve', 'desc' => 'One recommendation a month — the next thing worth doing, in priority order.' ),
+		),
+		'stack'   => array(
+			'lede'  => '',
+			'items' => array(),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Tell Us About the Site You Need Looked After',
+		'lede'    => 'Send the URL — whoever built it. You get an honest audit of its current state and a monthly price, with no obligation to take the plan.',
+		'points'  => array(
+			array( 'title' => 'We support sites we did not build', 'desc' => 'Inherited a site from another developer? That is most of this work.' ),
+			array( 'title' => 'No long contract', 'desc' => 'Monthly. Stay because it is worth it, not because you signed something.' ),
+			array( 'title' => 'Emergencies answered', 'desc' => 'Site down or hacked, we start immediately — plan or no plan.' ),
+		),
+	),
+
+	'faq_heading' => 'Maintenance & Support FAQs',
+
+	'cta' => array(
+		'heading' => 'When Was Your Site Last Updated?',
+		'text'    => 'Send us the URL. We will audit it, tell you what state it is really in, and quote a monthly plan to keep it that way.',
+		'button'  => 'Get a Site Audit',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Do you maintain sites you did not build?',
+			'a' => 'Yes, and it is most of this work. We audit what is there first, tell you honestly whether it is maintainable as it stands, and fix the urgent problems before starting the routine.',
+		),
+		array(
+			'q' => 'What does it cost?',
+			'a' => 'It depends on the size of the site, whether it is a store, and how much content work you want included each month. We quote after the audit — a five-page business site and a busy WooCommerce store are not the same job.',
+		),
+		array(
+			'q' => 'How quickly do you respond?',
+			'a' => 'Normal requests within one business day. If the site is down or compromised, we start straight away — that is what the plan is for.',
+		),
+		array(
+			'q' => 'What happens if my site gets hacked?',
+			'a' => 'We take it offline if needed, restore from a clean backup, find and close the way in, then re-scan. On a care plan the backups and the scanning that make this quick are already in place.',
+		),
+		array(
+			'q' => 'Do I need this if my site works fine?',
+			'a' => 'WordPress, plugins and PHP all keep moving. Sites that are never updated do not fail on the day you stop — they fail six months later, usually at a bad moment, and cost more to recover than the plan would have.',
+		),
+		array(
+			'q' => 'Can I cancel?',
+			'a' => 'Any month. Your site, hosting, domain and backups are yours, and we hand over access without argument.',
+		),
+	),
+);

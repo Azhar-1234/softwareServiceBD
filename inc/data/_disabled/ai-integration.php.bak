@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copy for the AI Integration service page.
+ *
+ * Phone frames with the assistant screen leading: a chat is the thing people
+ * picture when they hear "AI", even though most of the work is behind an API.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame'        => 'phone',
+	'screen_start' => 2,
+
+	'hero' => array(
+		'eyebrow'  => 'AI Integration',
+		'headline' => 'Put AI Where It Saves Your Team Hours',
+		'lede'     => 'Not an AI strategy deck — a working assistant, a sorted inbox or a form that fills itself, added to the systems you already run.',
+		'trust'    => array( 'OpenAI', 'Google Gemini', 'Chat Assistants', 'Automation', 'Document Processing' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Build With AI',
+		'lede'    => 'We start from the repetitive task, not from the model. If a rule or a filter solves it, we will say so before selling you an API bill.',
+		'items'   => array(
+			array(
+				'icon'  => 'chat',
+				'title' => 'AI Chat Assistants',
+				'desc'  => 'Answers drawn from your own documents, on your site or inside your app.',
+				'pills' => array( 'RAG', 'Your data' ),
+			),
+			array(
+				'icon'  => 'stars',
+				'title' => 'Customer Support Automation',
+				'desc'  => 'Common questions handled, the rest routed to a person with context attached.',
+				'pills' => array( 'Routing', 'Handover' ),
+			),
+			array(
+				'icon'  => 'doc',
+				'title' => 'Document Processing',
+				'desc'  => 'Invoices, forms and PDFs read into structured data your system can use.',
+				'pills' => array( 'Extraction', 'Validation' ),
+			),
+			array(
+				'icon'  => 'globe',
+				'title' => 'AI Search & Recommendations',
+				'desc'  => 'Search that understands the question, and suggestions that fit the customer.',
+				'pills' => array( 'Semantic search', 'Vectors' ),
+			),
+			array(
+				'icon'  => 'lines',
+				'title' => 'Content Generation',
+				'desc'  => 'Drafts for product copy, descriptions and replies — with a human approving.',
+				'pills' => array( 'Drafts', 'Review step' ),
+			),
+			array(
+				'icon'  => 'bolt',
+				'title' => 'Workflow Automation',
+				'desc'  => 'Enquiries sorted, data moved between tools, follow-ups triggered on time.',
+				'pills' => array( 'Webhooks', 'Queues' ),
+			),
+			array(
+				'icon'  => 'check-chart',
+				'title' => 'Reporting & Summaries',
+				'desc'  => 'A daily plain-English summary of what your data actually did.',
+				'pills' => array( 'Summaries', 'Alerts' ),
+			),
+			array(
+				'icon'  => 'sparkle',
+				'title' => 'AI Agents',
+				'desc'  => 'Multi-step tasks run end to end, with limits and a log of every action.',
+				'pills' => array( 'Tools', 'Guardrails' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'AI That Fits Inside Your Product',
+		'lede'    => 'The interface matters as much as the model: people trust an assistant that shows its sources and admits when it does not know.',
+		'labels'  => array( 'Assistant', 'Dashboard', 'Inbox', 'Search', 'Summary', 'Settings' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Build It',
+		'lede'    => 'Five stages, starting with the least glamorous one: proving the task is worth automating.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Find the Repetition', 'desc' => 'Which task, how many hours a week, and what "right" looks like.' ),
+			array( 'no' => '02', 'title' => 'Pilot', 'desc' => 'A small prototype on your real data before any commitment.' ),
+			array( 'no' => '03', 'title' => 'Build & Integrate', 'desc' => 'Wired into your app, site or tools, with a human approval step where it matters.' ),
+			array( 'no' => '04', 'title' => 'Guardrails & Testing', 'desc' => 'Limits, logging, fallbacks and a check on what it costs per run.' ),
+			array( 'no' => '05', 'title' => 'Measure & Improve', 'desc' => 'Track accuracy and hours saved, then tune the prompts and the flow.' ),
+		),
+		'stack'   => array(
+			'lede'  => 'The stack behind an AI build.',
+			'items' => array( 'ai', 'laravel', 'node', 'javascript', 'php', 'mysql' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Tell Us What Eats Your Team’s Time',
+		'lede'    => 'Describe the task somebody repeats every day. We will tell you whether AI is the right tool for it, what it would cost to run, and what it would get wrong.',
+		'points'  => array(
+			array( 'title' => 'Start with a pilot', 'desc' => 'Prove it on your real data before committing to a build.' ),
+			array( 'title' => 'Your data stays yours', 'desc' => 'We use business API tiers, not consumer accounts that train on your input.' ),
+			array( 'title' => 'Honest about limits', 'desc' => 'Where a model is unreliable, we design a human check in rather than hope.' ),
+		),
+	),
+
+	'faq_heading' => 'AI Integration FAQs',
+
+	'cta' => array(
+		'heading' => 'Have a Task Worth Automating?',
+		'text'    => 'Tell us what your team repeats every day. We will scope a pilot, price the running cost, and be straight about what AI cannot do here.',
+		'button'  => 'Start Your AI Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'How much does AI cost to run?',
+			'a' => 'There are two costs: building the integration, and the per-use API charge afterwards. The second is usually smaller than people expect — often a few dollars a month for a support assistant — and we estimate it from your real volumes before you commit.',
+		),
+		array(
+			'q' => 'Is my business data safe?',
+			'a' => 'We use business API tiers, where inputs are not used to train the models, and we send only the data the task needs. Anything sensitive can stay on your side of the integration. What is sent, and where, is written down before we build.',
+		),
+		array(
+			'q' => 'What if the AI gets something wrong?',
+			'a' => 'It will, sometimes. That is a design question, not a reason to avoid it: for anything with consequences we put a human approval step in front of the action, log every run, and give the model a way to say it does not know.',
+		),
+		array(
+			'q' => 'Which model do you use?',
+			'a' => 'Whichever fits the task and the budget — usually Claude, OpenAI or Gemini. Integrations are built so the model can be swapped without rewriting the application, because this field moves quickly.',
+		),
+		array(
+			'q' => 'Can you add AI to software I already have?',
+			'a' => 'Usually yes, if it has an API or a database we can reach. That is the common case — an assistant or an automation added beside a working system rather than a rebuild.',
+		),
+		array(
+			'q' => 'Do I need a lot of data first?',
+			'a' => 'For an assistant that answers from your documents, no — your existing pages, PDFs and past replies are enough. Training a custom model would need far more, and for most businesses it is not the right approach anyway.',
+		),
+	),
+);

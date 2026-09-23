@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copy for the WordPress Development service page.
+ *
+ * A child of Web Development, for the visitor who already knows they want
+ * WordPress and wants to know whether we build it properly.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame' => 'browser',
+	'screen_start' => 0,
+
+	'hero' => array(
+		'eyebrow'  => 'WordPress Development',
+		'headline' => 'WordPress Sites Built Properly, Not Assembled',
+		'lede'     => 'A custom theme instead of a stack of page-builder plugins: faster pages, a cleaner admin, and a site that still works after the next round of updates.',
+		'trust'    => array( 'Custom Themes', 'Plugins', 'WooCommerce', 'Core Web Vitals', 'Migration' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Build in WordPress',
+		'lede'    => 'Everything from a fast business site to a store you run daily — with an editing experience your team can actually use.',
+		'items'   => array(
+			array(
+				'icon'  => 'window',
+				'title' => 'Custom Themes',
+				'desc'  => 'Built for your content and brand — no page builder, no unused code.',
+				'pills' => array( 'PHP', 'Block editor' ),
+			),
+			array(
+				'icon'  => 'cart',
+				'title' => 'WooCommerce Stores',
+				'desc'  => 'Products, payments, shipping and the reports you need to run them.',
+				'pills' => array( 'WooCommerce', 'Payments' ),
+			),
+			array(
+				'icon'  => 'code',
+				'title' => 'Custom Plugins',
+				'desc'  => 'The feature you need, written once, instead of three plugins that half-fit.',
+				'pills' => array( 'Hooks', 'REST API' ),
+			),
+			array(
+				'icon'  => 'bolt',
+				'title' => 'Speed Optimization',
+				'desc'  => 'Core Web Vitals work on an existing site, with before-and-after numbers.',
+				'pills' => array( 'LCP', 'Caching' ),
+			),
+			array(
+				'icon'  => 'shield',
+				'title' => 'Security & Recovery',
+				'desc'  => 'Hardening, malware clean-up and a backup routine that has been tested.',
+				'pills' => array( 'Hardening', 'Backups' ),
+			),
+			array(
+				'icon'  => 'server',
+				'title' => 'Migration & Hosting',
+				'desc'  => 'Move host or domain without losing rankings, email or a day of trading.',
+				'pills' => array( 'Zero downtime', 'DNS' ),
+			),
+			array(
+				'icon'  => 'plug',
+				'title' => 'Headless & Integrations',
+				'desc'  => 'WordPress as the content API behind an app, or wired to your other systems.',
+				'pills' => array( 'REST API', 'Webhooks' ),
+			),
+			array(
+				'icon'  => 'chart',
+				'title' => 'Technical SEO',
+				'desc'  => 'Schema, sitemaps, internal linking and clean markup built into the theme.',
+				'pills' => array( 'Schema', 'Sitemaps' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Sites and Stores We Design',
+		'lede'    => 'The public pages and the admin behind them — because the second one is where your team spends the time.',
+		'labels'  => array( 'Home page', 'Editor', 'Shop', 'Product', 'Blog', 'Checkout' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Build It',
+		'lede'    => 'Five stages, a staging site to review from early on, and a fixed scope agreed before development starts.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Discovery', 'desc' => 'Goals, content, and what is worth keeping from the current site.' ),
+			array( 'no' => '02', 'title' => 'Design', 'desc' => 'Page structure and interface, approved before the theme is built.' ),
+			array( 'no' => '03', 'title' => 'Development', 'desc' => 'Custom theme, editor blocks, content migration and integrations.' ),
+			array( 'no' => '04', 'title' => 'Testing & Launch', 'desc' => 'Speed, devices, redirects and search setup, then go live.' ),
+			array( 'no' => '05', 'title' => 'Care Plan', 'desc' => 'Updates, backups, monitoring and monthly content changes.' ),
+		),
+		'stack'   => array(
+			'lede'  => 'The stack behind a WordPress build.',
+			'items' => array( 'wordpress', 'woocommerce', 'php', 'mysql', 'javascript', 'react-native', 'ai' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Tell Us About Your WordPress Site',
+		'lede'    => 'A new build, a rescue, a store, or a site that has quietly become slow — send the URL and what bothers you about it. You get an honest assessment and a fixed price.',
+		'points'  => array(
+			array( 'title' => 'No page-builder bloat', 'desc' => 'A custom theme loads faster and breaks less at update time.' ),
+			array( 'title' => 'An admin your team can use', 'desc' => 'Editing set up around your content, not around the theme demo.' ),
+			array( 'title' => 'Looked after afterwards', 'desc' => 'Updates, backups and monitoring on a monthly plan.' ),
+		),
+	),
+
+	'faq_heading' => 'WordPress Development FAQs',
+
+	'cta' => array(
+		'heading' => 'Need a WordPress Site That Performs?',
+		'text'    => 'New build, rescue or store — send us the details and we will come back with a scope, a timeline and a fixed price.',
+		'button'  => 'Start Your WordPress Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Do you use Elementor, Divi or another page builder?',
+			'a' => 'Only when a client already runs one and wants to keep editing that way. Given the choice we build a custom theme: fewer scripts, faster pages, better Core Web Vitals, and far less that breaks when plugins update.',
+		),
+		array(
+			'q' => 'How much does a WordPress site cost?',
+			'a' => 'It depends on page count, whether the design is custom, how much content has to be migrated or written, and what it integrates with. We scope first and quote a fixed price before development starts.',
+		),
+		array(
+			'q' => 'Can you fix my slow WordPress site?',
+			'a' => 'Usually, yes. Most slowness comes from unoptimised images, too many plugins, weak hosting or render-blocking assets. We measure first, fix the causes, and show you the before-and-after numbers.',
+		),
+		array(
+			'q' => 'Can you build a WooCommerce store?',
+			'a' => 'Yes — products, variations, payment gateways used in Bangladesh and internationally, shipping rules, and the reports you need to actually run it.',
+		),
+		array(
+			'q' => 'Can you move my site to a new host without downtime?',
+			'a' => 'Yes. We migrate to staging, test it there, lower DNS time-to-live in advance and cut over at a quiet hour, keeping the old host live until the new one has fully propagated.',
+		),
+		array(
+			'q' => 'Will I be able to edit it myself?',
+			'a' => 'Yes. That is the point of using WordPress. We set up the editor around your content, and hand over a short walkthrough of the pages you will change most.',
+		),
+	),
+);

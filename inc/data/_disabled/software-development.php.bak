@@ -1,0 +1,146 @@
+<?php
+/**
+ * Copy for the Software Development service page.
+ *
+ * The parent of the Laravel page: this one is for the business owner who
+ * knows the process is broken but not what to build. Laravel Development is
+ * for the visitor who has already chosen the framework.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	'frame'        => 'browser',
+	'screen_start' => 1,
+
+	'hero' => array(
+		'eyebrow'  => 'Software Development',
+		'headline' => 'Custom Software Built Around How You Actually Work',
+		'lede'     => 'When the spreadsheet has become the system and no off-the-shelf product quite fits, we build the software that does — one module at a time, starting with whatever costs you the most hours.',
+		'trust'    => array( 'Business Systems', 'Dashboards', 'Integrations', 'Multi-user Access', 'Reporting' ),
+	),
+
+	'build' => array(
+		'heading' => 'What We Build',
+		'lede'    => 'Software for the work behind the website: the orders, the stock, the staff and the numbers you report on.',
+		'items'   => array(
+			array(
+				'icon'  => 'window',
+				'title' => 'Business Management Systems',
+				'desc'  => 'One place for jobs, orders, customers and approvals instead of four.',
+				'pills' => array( 'Workflow', 'Roles' ),
+			),
+			array(
+				'icon'  => 'clipboard',
+				'title' => 'CRM & Sales Tools',
+				'desc'  => 'Leads, follow-ups and pipeline, shaped around how your team sells.',
+				'pills' => array( 'Pipeline', 'Follow-ups' ),
+			),
+			array(
+				'icon'  => 'cart',
+				'title' => 'Inventory & POS',
+				'desc'  => 'Stock across branches, purchase orders and counter sales that reconcile.',
+				'pills' => array( 'Stock', 'Branches' ),
+			),
+			array(
+				'icon'  => 'dollar',
+				'title' => 'Billing & Invoicing',
+				'desc'  => 'Quotes, invoices, payments and the reminders nobody remembers to send.',
+				'pills' => array( 'Invoices', 'Payments' ),
+			),
+			array(
+				'icon'  => 'stars',
+				'title' => 'HR & Operations',
+				'desc'  => 'Attendance, leave, payroll inputs and the approvals around them.',
+				'pills' => array( 'Attendance', 'Approvals' ),
+			),
+			array(
+				'icon'  => 'check-chart',
+				'title' => 'Reporting Dashboards',
+				'desc'  => 'The five numbers you actually run on, current and exportable.',
+				'pills' => array( 'Reports', 'Exports' ),
+			),
+			array(
+				'icon'  => 'plug',
+				'title' => 'System Integration',
+				'desc'  => 'Make your website, accounting and existing tools share one set of data.',
+				'pills' => array( 'APIs', 'Sync' ),
+			),
+			array(
+				'icon'  => 'server',
+				'title' => 'Legacy Modernisation',
+				'desc'  => 'Move an ageing system to something maintainable without losing history.',
+				'pills' => array( 'Migration', 'Upgrades' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Interfaces Your Team Will Live In',
+		'lede'    => 'Internal software is used for hours a day. It gets the same design attention as the public site — arguably more.',
+		'labels'  => array( 'Dashboard', 'Records', 'Storefront' ),
+	),
+
+	'process' => array(
+		'heading' => 'How We Build It',
+		'lede'    => 'Five stages, delivered in slices your team can start using before the whole system is finished.',
+		'steps'   => array(
+			array( 'no' => '01', 'title' => 'Discovery', 'desc' => 'Sit with the people doing the work and map where the hours go.' ),
+			array( 'no' => '02', 'title' => 'Architecture', 'desc' => 'Data model, permissions and the order features are released in.' ),
+			array( 'no' => '03', 'title' => 'Development', 'desc' => 'Built module by module, demoed weekly on a staging URL.' ),
+			array( 'no' => '04', 'title' => 'Rollout & Training', 'desc' => 'Data migrated, staff walked through it, old process retired.' ),
+			array( 'no' => '05', 'title' => 'Support', 'desc' => 'Monitoring, backups, fixes and the next module when you are ready.' ),
+		),
+		'stack'   => array(
+			'lede'  => 'The stack behind a custom build.',
+			'items' => array( 'laravel', 'php', 'mysql', 'javascript', 'node', 'ai' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Describe the Process You Want to Fix',
+		'lede'    => 'Tell us what your team does by hand, in spreadsheets, or across systems that do not talk. We will come back with what software would replace, what it would cost, and what it would not solve.',
+		'points'  => array(
+			array( 'title' => 'Start with one module', 'desc' => 'Replace the worst process first, prove it, then extend.' ),
+			array( 'title' => 'You own it', 'desc' => 'Your code, your server, your data — no per-seat licence forever.' ),
+			array( 'title' => 'Honest about off-the-shelf', 'desc' => 'If an existing product fits, we will tell you to buy it.' ),
+		),
+	),
+
+	'faq_heading' => 'Custom Software FAQs',
+
+	'cta' => array(
+		'heading' => 'Outgrown Your Spreadsheets?',
+		'text'    => 'Tell us how the work flows today. We will scope the software that replaces it — fixed price, staged rollout.',
+		'button'  => 'Start Your Software Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'Should I buy software or build it?',
+			'a' => 'Buy when your process is ordinary and a product already fits — accounting is the usual example. Build when the process is how you compete, when every product needs three workarounds, or when per-user licences have grown past what a build would cost. We will say which one applies to you.',
+		),
+		array(
+			'q' => 'How much does custom software cost?',
+			'a' => 'It depends on the number of modules, user roles, integrations and how much existing data has to move. We scope first and quote per stage, so you can start with one module and decide on the rest later.',
+		),
+		array(
+			'q' => 'How long before we can use it?',
+			'a' => 'The first usable module is typically weeks, not months, because we release in slices. A full multi-module system is a longer programme, but you are working in part of it long before the end.',
+		),
+		array(
+			'q' => 'Can it work with our existing website and accounts software?',
+			'a' => 'Yes — that is usually the point. We integrate through APIs so orders from the site, stock in the system and figures in your accounts stop being three separate truths.',
+		),
+		array(
+			'q' => 'Will our data from spreadsheets carry over?',
+			'a' => 'Yes. Migration is part of the rollout: we clean and import the existing records, and run the old and new side by side until you are confident.',
+		),
+		array(
+			'q' => 'Who owns the code?',
+			'a' => 'You do. It lives in your repository and runs on your hosting. If you ever want another team to take it on, nothing stops you.',
+		),
+	),
+);

@@ -1,0 +1,158 @@
+<?php
+/**
+ * Copy for the App Development service page.
+ *
+ * Five sections, deliberately: hero, what we build, the screens, how we work,
+ * and the enquiry — plus the site's shared FAQ and closing band. An earlier
+ * draft had eighteen, which read as a wall rather than a pitch.
+ *
+ * Everything the page says lives here so the wording can be revised without
+ * going near the markup. Deliberately absent: prices, client logos and
+ * industry expertise claims — those are worth publishing once there is real
+ * work behind them.
+ *
+ * @package ssbd
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return array(
+	// Phone frames: this is an app page. Web services use 'browser'.
+	'frame' => 'phone',
+
+	'hero' => array(
+		'eyebrow'  => 'App Development',
+		'headline' => 'Build Mobile Apps That Move Your Business Forward',
+		'lede'     => 'We design and develop high-quality mobile applications for startups, businesses and organizations — from a first MVP to a scalable, production-ready product.',
+		'trust'    => array( 'iOS', 'Android', 'Cross-Platform', 'API Integration', 'AI-Powered Apps' ),
+	),
+
+	/*
+	 * The eight cards are the whole "what we do" story: the services and the
+	 * application types from the old, longer page, merged. Anything that did
+	 * not survive the merge lives in the FAQ, where people actually look for
+	 * it — cost, native versus cross-platform, publishing, maintenance.
+	 */
+	'build' => array(
+		'heading' => 'What We Build',
+		'lede'    => 'From a focused MVP to a multi-role platform — designed around your users, connected to the systems you already run.',
+		'items'   => array(
+			array(
+				'icon'  => 'mobile',
+				'title' => 'Custom Mobile Apps',
+				'desc'  => 'iOS and Android applications built around your workflow, not a template.',
+				'pills' => array( 'Flutter', 'React Native', 'Native' ),
+			),
+			array(
+				'icon'  => 'rocket',
+				'title' => 'MVP for Startups',
+				'desc'  => 'Ship the core idea first, put it in front of real users, then build on what they use.',
+				'pills' => array( 'Fast build', 'Core features' ),
+			),
+			array(
+				'icon'  => 'clipboard',
+				'title' => 'Business & Internal Apps',
+				'desc'  => 'CRM, HR, inventory, booking and field operations, with an admin dashboard behind them.',
+				'pills' => array( 'Dashboard', 'User roles' ),
+			),
+			array(
+				'icon'  => 'cart',
+				'title' => 'E-commerce & Delivery',
+				'desc'  => 'Shopping, ordering and delivery apps wired into your existing store and payments.',
+				'pills' => array( 'WooCommerce', 'Payments' ),
+			),
+			array(
+				'icon'  => 'sparkle',
+				'title' => 'AI-Powered Apps',
+				'desc'  => 'Assistants, recommendations, smart search and automation added through APIs.',
+				'pills' => array( 'OpenAI', 'Gemini' ),
+			),
+			array(
+				'icon'  => 'plug',
+				'title' => 'API & Backend',
+				'desc'  => 'Laravel and WordPress APIs so the app and your website share one set of data.',
+				'pills' => array( 'Laravel', 'REST API' ),
+			),
+			array(
+				'icon'  => 'window',
+				'title' => 'Progressive Web Apps',
+				'desc'  => 'Installable, web-first applications when the app stores are not worth the overhead.',
+				'pills' => array( 'PWA', 'Offline-ready' ),
+			),
+			array(
+				'icon'  => 'shield',
+				'title' => 'Launch & Maintenance',
+				'desc'  => 'Store submission, then updates, monitoring and improvements after release.',
+				'pills' => array( 'App Store', 'Play Store' ),
+			),
+		),
+	),
+
+	'showcase' => array(
+		'heading' => 'Interfaces Designed for Real Use',
+		'lede'    => 'Every screen is designed before it is built — flows first, then wireframes, then the interface people actually touch.',
+		'labels'  => array( 'Dashboard', 'Orders', 'AI Assistant', 'Checkout', 'Booking', 'Profile' ),
+	),
+
+	'process' => array(
+		'heading'  => 'How We Build It',
+		'lede'     => 'Five stages, a working demo every week, and a fixed scope agreed before development starts.',
+		'steps'    => array(
+			array( 'no' => '01', 'title' => 'Discovery', 'desc' => 'Understand the business problem, the users and the must-have features.' ),
+			array( 'no' => '02', 'title' => 'UI/UX Design', 'desc' => 'User flows, wireframes and the interface — approved before any code.' ),
+			array( 'no' => '03', 'title' => 'Development', 'desc' => 'App, backend and integrations built together, demoed weekly.' ),
+			array( 'no' => '04', 'title' => 'Testing & Launch', 'desc' => 'Real-device testing, then store submission and release.' ),
+			array( 'no' => '05', 'title' => 'Support', 'desc' => 'Updates, OS compatibility, monitoring and the next round of features.' ),
+		),
+		'stack'    => array(
+			'lede'  => 'The stack we build apps on — chosen per project, not all at once.',
+			// Keys resolve to marks in template-parts/components/tech-logos.php.
+			'items' => array( 'flutter', 'react-native', 'android', 'ios', 'laravel', 'node', 'ai' ),
+		),
+	),
+
+	'consultation' => array(
+		'heading' => 'Tell Us What You Want to Build',
+		'lede'    => 'Send the idea, the business problem or the system you already run. You get a scope, a timeline and a fixed price back — and we will say so if an app is not what you need.',
+		'points'  => array(
+			array( 'title' => 'Fixed scope, fixed price', 'desc' => 'Agreed before development starts, not discovered along the way.' ),
+			array( 'title' => 'One team, front to back', 'desc' => 'Design, app, backend, APIs and AI — no handover between vendors.' ),
+			array( 'title' => 'Support after launch', 'desc' => 'We keep improving the app once it is live.' ),
+		),
+	),
+
+	'faq_heading' => 'App Development FAQs',
+
+	'cta' => array(
+		'heading' => 'Have an App Idea?',
+		'text'    => 'Let us turn it into a practical, scalable digital product — scoped, priced, built and supported after launch.',
+		'button'  => 'Start Your App Project',
+	),
+
+	'faqs' => array(
+		array(
+			'q' => 'How much does it cost to build an app?',
+			'a' => 'It depends on platforms, screens, features, integrations and whether you need a backend and admin dashboard. We scope the project first, then quote a fixed price — so you know the number before development starts, not after.',
+		),
+		array(
+			'q' => 'How long does app development take?',
+			'a' => 'A focused MVP is usually a matter of weeks; a multi-role platform with integrations takes longer. You get a stage-by-stage timeline with the quote, and a working demo every week so progress is visible rather than promised.',
+		),
+		array(
+			'q' => 'Should I build native or cross-platform?',
+			'a' => 'For most business applications, cross-platform gives you both app stores from one codebase at a lower cost and with cheaper maintenance. Native is worth it when you need maximum performance or deep device features. We recommend based on your requirements, not on what is quickest for us.',
+		),
+		array(
+			'q' => 'Can you connect the app to my existing website or software?',
+			'a' => 'Yes — that is usually the point. The app talks to your site through an API layer, so orders, stock and customers stay in one place. We build Laravel APIs and work with the WordPress and WooCommerce REST APIs.',
+		),
+		array(
+			'q' => 'Can you add AI to an app I already have?',
+			'a' => 'Yes. AI features are added through APIs — an assistant, smarter search, recommendations or document processing — without rebuilding the application you already have.',
+		),
+		array(
+			'q' => 'Can you publish the app and maintain it afterwards?',
+			'a' => 'Yes. We prepare the store listings and take the app through Play Store and App Store review, then handle updates, OS compatibility, security patches and monitoring on an ongoing plan.',
+		),
+	),
+);

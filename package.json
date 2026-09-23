@@ -1,0 +1,24 @@
+{
+  "name": "software-service-bd-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React island bundle for the Software Service BD WordPress theme.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "vite build && npm run build:js:standalone",
+    "build:css": "esbuild assets/css/theme.css --minify --outfile=assets/css/theme.min.css",
+    "test": "node tests/run.mjs",
+    "build:js:standalone": "esbuild assets/js/clipboard.js assets/js/partners.js assets/js/article.js assets/js/comparison-table.js assets/js/hero.js assets/js/link-targets.js --minify --target=es2019 --outdir=assets/js --out-extension:.js=.min.js --allow-overwrite"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "jsdom": "^29.1.1",
+    "vite": "^5.4.10"
+  }
+}
