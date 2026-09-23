@@ -33,6 +33,7 @@ if ( post_password_required() ) {
 $ssbd_count  = (int) get_comments_number();
 $ssbd_member = is_user_logged_in();
 $ssbd_gated  = ssbd_account_setting( 'comment_login' ) && ! $ssbd_member;
+$ssbd_unverified = $ssbd_member && ! ssbd_user_email_verified();
 ?>
 <section class="comments" id="comments" aria-labelledby="comments-title">
 
@@ -83,6 +84,24 @@ $ssbd_gated  = ssbd_account_setting( 'comment_login' ) && ! $ssbd_member;
 						</a>
 					<?php endif; ?>
 				</div>
+			</div>
+		</div>
+		<?php
+
+	elseif ( $ssbd_unverified ) :
+		$ssbd_return = get_permalink() . '#respond';
+		?>
+		<div class="comment-gate" id="respond">
+			<span class="comment-gate-icon" aria-hidden="true"><?php ssbd_icon( 'lock', 22 ); ?></span>
+			<div class="comment-gate-body">
+				<h3><?php esc_html_e( 'Verify your email to comment', 'ssbd' ); ?></h3>
+				<p><?php esc_html_e( 'We require one email confirmation before an account can post. This helps keep automated spam out of the discussion.', 'ssbd' ); ?></p>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="ssbd_resend_verification">
+					<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $ssbd_return ); ?>">
+					<?php wp_nonce_field( 'ssbd_resend_verification' ); ?>
+					<button class="btn btn--primary btn--sm" type="submit"><?php esc_html_e( 'Send verification email', 'ssbd' ); ?></button>
+				</form>
 			</div>
 		</div>
 		<?php

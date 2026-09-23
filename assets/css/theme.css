@@ -2827,6 +2827,16 @@ a.card:hover { color: inherit; }
 .job-popular span { font-weight: 700; }
 .job-popular a { color: var(--ink); }
 .job-popular .job-saved-link { margin-left: auto; color: var(--accent-text); font-weight: 700; }
+.jobs-featured-image {
+  width: min(100%, 1040px);
+  margin: 4px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  aspect-ratio: 1200 / 500;
+  background: var(--surface);
+}
+.jobs-featured-image img { width: 100%; height: 100%; object-fit: cover; }
 .job-categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));

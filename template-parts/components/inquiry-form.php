@@ -15,8 +15,10 @@ $ssbd_fields = ssbd_inquiry_fields();
 $ssbd_status = isset( $_GET['inquiry'] ) ? sanitize_key( wp_unslash( $_GET['inquiry'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification -- read-only display flag.
 ?>
 <div id="inquiry">
-	<?php if ( 'sent' === $ssbd_status ) : ?>
-		<p class="form-status form-status--ok" role="status"><?php esc_html_e( 'Inquiry sent. We will reply within one business day.', 'ssbd' ); ?></p>
+		<?php if ( 'sent' === $ssbd_status ) : ?>
+			<p class="form-status form-status--ok" role="status"><?php esc_html_e( 'Email verified and inquiry sent. We will reply within one business day.', 'ssbd' ); ?></p>
+		<?php elseif ( 'expired' === $ssbd_status ) : ?>
+			<p class="form-status form-status--err" role="alert"><?php esc_html_e( 'That verification link is invalid or expired. Please submit the form again.', 'ssbd' ); ?></p>
 	<?php elseif ( 'error' === $ssbd_status ) : ?>
 		<p class="form-status form-status--err" role="alert"><?php esc_html_e( 'We could not send that. Please check the form or email us directly.', 'ssbd' ); ?></p>
 	<?php endif; ?>
@@ -84,7 +86,7 @@ $ssbd_status = isset( $_GET['inquiry'] ) ? sanitize_key( wp_unslash( $_GET['inqu
 				<?php
 				printf(
 					/* translators: %s: privacy policy link */
-					esc_html__( 'We use your details only to answer this inquiry. See our %s.', 'ssbd' ),
+						esc_html__( 'We will email you a confirmation link before delivering this inquiry. See our %s.', 'ssbd' ),
 					'<a href="' . esc_url( ssbd_page_url( 'privacy-policy' ) ) . '">' . esc_html__( 'privacy policy', 'ssbd' ) . '</a>'
 				);
 				?>

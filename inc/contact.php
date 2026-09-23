@@ -72,6 +72,53 @@ function ssbd_inquiry_fields() {
 }
 
 /**
+ * Deliver an inquiry after its sender has verified the submitted address.
+ *
+ * @param array<string,string> $clean  Sanitized inquiry fields.
+ * @param string               $source Submission page.
+ * @return array{ok:bool,message:string}
+ */
+function ssbd_deliver_verified_inquiry( $clean, $source ) {
+	$fields = ssbd_inquiry_fields();
+	$lines  = array();
+	foreach ( $fields as $key => $field ) {
+		$value = $clean[ $key ] ?? '';
+		if ( '' === $value ) {
+			continue;
+		}
+		if ( 'select' === $field['type'] ) {
+			$value = $field['options'][ $value ] ?? $value;
+		}
+		$lines[] = $field['label'] . ': ' . $value;
+	}
+
+	$lines[] = '';
+	$lines[] = '---';
+	$lines[] = 'Email verified: ' . current_time( 'mysql' );
+	$lines[] = 'Page: ' . $source;
+
+	$sent = wp_mail(
+		ssbd_inquiry_recipient(),
+		sprintf(
+			/* translators: %s: sender name */
+			__( 'Verified project inquiry — %s', 'ssbd' ),
+			$clean['name']
+		),
+		implode( "\n", $lines ),
+		array(
+			'Content-Type: text/plain; charset=UTF-8',
+			'Reply-To: ' . $clean['name'] . ' <' . $clean['email'] . '>',
+		)
+	);
+
+	do_action( 'ssbd_inquiry_submitted', $clean, $sent );
+
+	return $sent
+		? array( 'ok' => true, 'message' => __( 'Email verified and inquiry sent. We will reply within one business day.', 'ssbd' ) )
+		: array( 'ok' => false, 'message' => __( 'Your email was verified, but the inquiry could not be delivered. Please email us directly.', 'ssbd' ) );
+}
+
+/**
  * Validate and send an inquiry.
  *
  * @param array $input Raw input.
@@ -120,61 +167,69 @@ function ssbd_process_inquiry( $input ) {
 		);
 	}
 
-	$lines = array();
-	foreach ( $fields as $key => $field ) {
-		$value = $clean[ $key ];
-		if ( '' === $value ) {
-			continue;
-		}
-		if ( 'select' === $field['type'] ) {
-			$value = $field['options'][ $value ] ?? $value;
-		}
-		$lines[] = $field['label'] . ': ' . $value;
+	$source   = isset( $input['source'] ) ? esc_url_raw( wp_unslash( $input['source'] ) ) : home_url( '/' );
+	$identity = strtolower( $clean['email'] );
+	$ip       = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? 'unknown' ) );
+	$rate_key = 'ssbd_inquiry_rate_' . hash( 'sha256', $identity . '|' . $ip );
+	$attempts = (int) get_transient( $rate_key );
+
+	if ( $attempts >= 3 ) {
+		return array( 'ok' => false, 'message' => __( 'Too many verification requests. Please wait one hour and try again.', 'ssbd' ) );
 	}
 
-	$lines[] = '';
-	$lines[] = '---';
-	$lines[] = 'Submitted: ' . current_time( 'mysql' );
-	$lines[] = 'Page: ' . ( isset( $input['source'] ) ? esc_url_raw( wp_unslash( $input['source'] ) ) : home_url( '/' ) );
+	$token = wp_generate_password( 48, false, false );
+	set_transient( 'ssbd_inquiry_verify_' . hash( 'sha256', $token ), array(
+		'fields' => $clean,
+		'source' => $source,
+	), HOUR_IN_SECONDS );
+	set_transient( $rate_key, $attempts + 1, HOUR_IN_SECONDS );
+
+	$verify_url = add_query_arg( array(
+		'action' => 'ssbd_verify_inquiry',
+		'token'  => $token,
+	), admin_url( 'admin-post.php' ) );
 
 	$sent = wp_mail(
-		ssbd_inquiry_recipient(),
+		$clean['email'],
+		__( 'Confirm your project inquiry', 'ssbd' ),
 		sprintf(
-			/* translators: %s: sender name */
-			__( 'New project inquiry — %s', 'ssbd' ),
-			$clean['name']
+			/* translators: 1: sender name, 2: verification URL. */
+			__( "Hello %1\$s,\n\nConfirm your email address to send your project inquiry:\n%2\$s\n\nThis link expires in one hour. If you did not submit the form, ignore this email.", 'ssbd' ),
+			$clean['name'],
+			$verify_url
 		),
-		implode( "\n", $lines ),
-		array(
-			'Content-Type: text/plain; charset=UTF-8',
-			'Reply-To: ' . $clean['name'] . ' <' . $clean['email'] . '>',
-		)
+		array( 'Content-Type: text/plain; charset=UTF-8' )
 	);
-
-	/**
-	 * Fires after an inquiry is processed — hook a CRM or logger here.
-	 *
-	 * @param array $clean Sanitized fields.
-	 * @param bool  $sent  Whether wp_mail() reported success.
-	 */
-	do_action( 'ssbd_inquiry_submitted', $clean, $sent );
 
 	if ( ! $sent ) {
-		return array(
-			'ok'      => false,
-			'message' => sprintf(
-				/* translators: %s: email address */
-				__( 'We could not send that. Please email us at %s.', 'ssbd' ),
-				ssbd_site( 'email' )
-			),
-		);
+		delete_transient( 'ssbd_inquiry_verify_' . hash( 'sha256', $token ) );
+		return array( 'ok' => false, 'message' => __( 'We could not send the verification email. Please email us directly.', 'ssbd' ) );
 	}
 
-	return array(
-		'ok'      => true,
-		'message' => __( 'Inquiry sent. We will reply within one business day.', 'ssbd' ),
-	);
+	return array( 'ok' => true, 'message' => __( 'Check your inbox and confirm your email to send the inquiry.', 'ssbd' ) );
 }
+
+/** Verify an inquiry email address and deliver the pending message. */
+function ssbd_verify_inquiry() {
+	// phpcs:ignore WordPress.Security.NonceVerification -- the random, single-use token is the nonce.
+	$token = sanitize_text_field( wp_unslash( $_GET['token'] ?? '' ) );
+	$key   = 'ssbd_inquiry_verify_' . hash( 'sha256', $token );
+	$data  = $token ? get_transient( $key ) : false;
+
+	if ( ! is_array( $data ) || empty( $data['fields'] ) ) {
+		wp_safe_redirect( add_query_arg( 'inquiry', 'expired', ssbd_page_url( 'contact' ) ) . '#inquiry' );
+		exit;
+	}
+
+	delete_transient( $key );
+	$result   = ssbd_deliver_verified_inquiry( $data['fields'], $data['source'] ?? home_url( '/' ) );
+	$redirect = add_query_arg( 'inquiry', $result['ok'] ? 'sent' : 'error', ssbd_page_url( 'contact' ) );
+
+	wp_safe_redirect( $redirect . '#inquiry' );
+	exit;
+}
+add_action( 'admin_post_nopriv_ssbd_verify_inquiry', 'ssbd_verify_inquiry' );
+add_action( 'admin_post_ssbd_verify_inquiry', 'ssbd_verify_inquiry' );
 
 /**
  * Register the REST endpoint used by the React island.

@@ -94,6 +94,67 @@ function ssbd_saved_jobs_document_title( $parts ) {
 add_filter( 'document_title_parts', 'ssbd_saved_jobs_document_title' );
 
 /**
+ * Give the public jobs pages descriptive, search-focused document titles.
+ *
+ * @param string[] $parts Document title parts.
+ * @return string[]
+ */
+function ssbd_jobs_document_title( $parts ) {
+	if ( is_post_type_archive( 'ssbd_job' ) ) {
+		$parts['title'] = __( 'International & Remote Jobs', 'ssbd' );
+	} elseif ( is_tax( 'ssbd_job_category' ) ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term ) {
+			$parts['title'] = sprintf( __( '%s International & Remote Jobs', 'ssbd' ), $term->name );
+		}
+	}
+
+	return $parts;
+}
+add_filter( 'document_title_parts', 'ssbd_jobs_document_title', 20 );
+
+/**
+ * Supply unique descriptions for the jobs archive and category archives.
+ *
+ * @param string $description Current meta description.
+ * @return string
+ */
+function ssbd_jobs_meta_description( $description ) {
+	if ( is_post_type_archive( 'ssbd_job' ) ) {
+		return __( 'Find current international and remote jobs in software, WordPress, design, marketing, data, AI, support, sales and cloud roles.', 'ssbd' );
+	}
+
+	if ( is_tax( 'ssbd_job_category' ) ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term ) {
+			return sprintf(
+				/* translators: %s: job category name. */
+				__( 'Browse current %s international and remote jobs. Compare employers, locations, employment types and application details.', 'ssbd' ),
+				$term->name
+			);
+		}
+	}
+
+	return $description;
+}
+add_filter( 'ssbd_meta_description', 'ssbd_jobs_meta_description', 20 );
+
+/** Use the jobs artwork for search and social previews of jobs archives. */
+function ssbd_jobs_share_image( $image ) {
+	if ( ! is_post_type_archive( 'ssbd_job' ) && ! is_tax( 'ssbd_job_category' ) ) {
+		return $image;
+	}
+
+	return array(
+		'url'    => SSBD_URI . '/assets/images/international-remote-jobs.webp',
+		'width'  => 1200,
+		'height' => 630,
+		'alt'    => __( 'Male technology professionals collaborating remotely across countries', 'ssbd' ),
+	);
+}
+add_filter( 'ssbd_share_image', 'ssbd_jobs_share_image' );
+
+/**
  * Seed the high-level job categories once.
  */
 function ssbd_seed_job_categories() {
@@ -514,6 +575,51 @@ add_filter( 'ssbd_schema_graph', static function ( $graph ) {
 	}
 	return $graph;
 } );
+
+/**
+ * Describe the jobs shown on archive pages as an ordered list.
+ *
+ * @param array<int,array<string,mixed>> $graph Existing schema graph.
+ * @return array<int,array<string,mixed>>
+ */
+function ssbd_schema_jobs_item_list( $graph ) {
+	if ( ! is_post_type_archive( 'ssbd_job' ) && ! is_tax( 'ssbd_job_category' ) ) {
+		return $graph;
+	}
+
+	global $wp_query;
+	if ( empty( $wp_query->posts ) ) {
+		return $graph;
+	}
+
+	$items = array();
+	foreach ( $wp_query->posts as $index => $post ) {
+		if ( ! $post instanceof WP_Post ) {
+			continue;
+		}
+
+		$items[] = array(
+			'@type'    => 'ListItem',
+			'position' => $index + 1,
+			'name'     => get_the_title( $post ),
+			'url'      => get_permalink( $post ),
+		);
+	}
+
+	if ( $items ) {
+		$graph[] = array(
+			'@type'           => 'ItemList',
+			'@id'             => ssbd_canonical_url() . '#jobs',
+			'name'            => wp_get_document_title(),
+			'numberOfItems'   => count( $items ),
+			'itemListOrder'   => 'https://schema.org/ItemListOrderDescending',
+			'itemListElement' => $items,
+		);
+	}
+
+	return $graph;
+}
+add_filter( 'ssbd_schema_graph', 'ssbd_schema_jobs_item_list', 20 );
 
 /**
  * Run the live jobs importer.

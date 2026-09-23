@@ -28,6 +28,9 @@ const SSBD_ACCOUNTS_OPTION = 'ssbd_accounts';
 /** How long a pending Google sign-in stays valid, in seconds. */
 const SSBD_OAUTH_TTL = 15 * MINUTE_IN_SECONDS;
 
+/** Email-verification links expire after one day. */
+const SSBD_EMAIL_VERIFY_TTL = DAY_IN_SECONDS;
+
 /**
  * Account settings, with defaults filled in.
  *
@@ -81,6 +84,51 @@ function ssbd_google_enabled() {
 add_filter( 'pre_option_comment_registration', function ( $value ) {
 	return ssbd_account_setting( 'comment_login' ) ? '1' : $value;
 } );
+
+/**
+ * Reject comments from accounts whose email has not been verified.
+ *
+ * @param array<string,mixed> $commentdata Submitted comment data.
+ * @return array<string,mixed>
+ */
+function ssbd_require_verified_commenter( $commentdata ) {
+	if ( ! ssbd_account_setting( 'comment_login' ) ) {
+		return $commentdata;
+	}
+
+	$user_id = get_current_user_id();
+	if ( ! $user_id || ! ssbd_user_email_verified( $user_id ) ) {
+		wp_die(
+			esc_html__( 'Verify your email address before posting a comment.', 'ssbd' ),
+			esc_html__( 'Email verification required', 'ssbd' ),
+			array( 'response' => 403, 'back_link' => true )
+		);
+	}
+
+	$rate_key = 'ssbd_comment_rate_' . $user_id;
+	if ( (int) get_transient( $rate_key ) >= 5 ) {
+		wp_die(
+			esc_html__( 'You are commenting too quickly. Please wait ten minutes and try again.', 'ssbd' ),
+			esc_html__( 'Please slow down', 'ssbd' ),
+			array( 'response' => 429, 'back_link' => true )
+		);
+	}
+
+	return $commentdata;
+}
+add_filter( 'preprocess_comment', 'ssbd_require_verified_commenter' );
+
+/** Count accepted submissions for the per-account comment rate limit. */
+function ssbd_count_comment_submission() {
+	$user_id = get_current_user_id();
+	if ( ! $user_id ) {
+		return;
+	}
+
+	$key = 'ssbd_comment_rate_' . $user_id;
+	set_transient( $key, (int) get_transient( $key ) + 1, 10 * MINUTE_IN_SECONDS );
+}
+add_action( 'comment_post', 'ssbd_count_comment_submission' );
 
 /**
  * The themed login page, with somewhere to return to afterwards.
@@ -184,12 +232,109 @@ function ssbd_account_error_message( $code ) {
 		'mismatch'     => __( 'The two passwords do not match.', 'ssbd' ),
 		'closed'       => __( 'New accounts are not being accepted at the moment.', 'ssbd' ),
 		'google'       => __( 'Google sign-in did not complete. Please try again.', 'ssbd' ),
-		'google_email' => __( 'Google did not confirm an email address for that account.', 'ssbd' ),
-		'expired'      => __( 'That sign-in attempt timed out. Please try again.', 'ssbd' ),
+			'google_email' => __( 'Google did not confirm an email address for that account.', 'ssbd' ),
+			'expired'      => __( 'That sign-in attempt timed out. Please try again.', 'ssbd' ),
+			'verify_sent'  => __( 'Check your inbox and verify your email before commenting.', 'ssbd' ),
+			'verify_mail'  => __( 'We could not send the verification email. Please try again later.', 'ssbd' ),
+			'verify_link'  => __( 'That verification link is invalid or has expired.', 'ssbd' ),
+			'rate'         => __( 'Too many attempts. Please wait one hour and try again.', 'ssbd' ),
 	);
 
 	return $messages[ $code ] ?? __( 'Something went wrong. Please try again.', 'ssbd' );
 }
+
+/**
+ * Whether a reader has proved ownership of the email on their account.
+ *
+ * @param int $user_id User ID.
+ * @return bool
+ */
+function ssbd_user_email_verified( $user_id = 0 ) {
+	$user_id = $user_id ?: get_current_user_id();
+	if ( ! $user_id ) {
+		return false;
+	}
+
+	return user_can( $user_id, 'moderate_comments' )
+		|| '1' === (string) get_user_meta( $user_id, 'ssbd_email_verified', true )
+		|| '' !== (string) get_user_meta( $user_id, 'ssbd_google_id', true );
+}
+
+/**
+ * Send a single-use email-verification link.
+ *
+ * @param int    $user_id  User ID.
+ * @param string $redirect Where to go after verification.
+ * @return bool
+ */
+function ssbd_send_account_verification( $user_id, $redirect = '' ) {
+	$user = get_user_by( 'id', $user_id );
+	if ( ! $user || ! is_email( $user->user_email ) ) {
+		return false;
+	}
+
+	$token = wp_generate_password( 48, false, false );
+	update_user_meta( $user_id, 'ssbd_email_verify_hash', wp_hash_password( $token ) );
+	update_user_meta( $user_id, 'ssbd_email_verify_expires', time() + SSBD_EMAIL_VERIFY_TTL );
+	update_user_meta( $user_id, 'ssbd_email_verify_redirect', ssbd_safe_redirect_target( $redirect ) );
+
+	$url = add_query_arg( array(
+		'action' => 'ssbd_verify_email',
+		'user'   => $user_id,
+		'token'  => $token,
+	), admin_url( 'admin-post.php' ) );
+
+	return wp_mail(
+		$user->user_email,
+		__( 'Verify your email address', 'ssbd' ),
+		sprintf(
+			/* translators: 1: display name, 2: verification URL. */
+			__( "Hello %1\$s,\n\nVerify your email address to activate commenting:\n%2\$s\n\nThis link expires in 24 hours. If you did not create this account, ignore this email.", 'ssbd' ),
+			$user->display_name,
+			$url
+		),
+		array( 'Content-Type: text/plain; charset=UTF-8' )
+	);
+}
+
+/** Complete a reader's email-verification round trip. */
+function ssbd_verify_account_email() {
+	// phpcs:disable WordPress.Security.NonceVerification -- the random, hashed, single-use token is the nonce.
+	$user_id = absint( $_GET['user'] ?? 0 );
+	$token   = sanitize_text_field( wp_unslash( $_GET['token'] ?? '' ) );
+	// phpcs:enable
+	$hash    = (string) get_user_meta( $user_id, 'ssbd_email_verify_hash', true );
+	$expires = (int) get_user_meta( $user_id, 'ssbd_email_verify_expires', true );
+
+	if ( ! $user_id || ! $token || ! $hash || $expires < time() || ! wp_check_password( $token, $hash ) ) {
+		ssbd_account_bounce( 'login', 'verify_link' );
+	}
+
+	$redirect = (string) get_user_meta( $user_id, 'ssbd_email_verify_redirect', true );
+	update_user_meta( $user_id, 'ssbd_email_verified', '1' );
+	delete_user_meta( $user_id, 'ssbd_email_verify_hash' );
+	delete_user_meta( $user_id, 'ssbd_email_verify_expires' );
+	delete_user_meta( $user_id, 'ssbd_email_verify_redirect' );
+
+	ssbd_sign_in_and_redirect( $user_id, $redirect );
+}
+add_action( 'admin_post_nopriv_ssbd_verify_email', 'ssbd_verify_account_email' );
+add_action( 'admin_post_ssbd_verify_email', 'ssbd_verify_account_email' );
+
+/** Send another verification link for a signed-in reader. */
+function ssbd_resend_account_verification() {
+	check_admin_referer( 'ssbd_resend_verification' );
+	$user_id  = get_current_user_id();
+	$redirect = ssbd_safe_redirect_target( wp_unslash( $_POST['redirect_to'] ?? '' ) );
+
+	if ( $user_id && ! ssbd_user_email_verified( $user_id ) ) {
+		ssbd_send_account_verification( $user_id, $redirect );
+	}
+
+	wp_safe_redirect( $redirect );
+	exit;
+}
+add_action( 'admin_post_ssbd_resend_verification', 'ssbd_resend_account_verification' );
 
 /**
  * Create a reader account.
@@ -351,13 +496,27 @@ function ssbd_handle_register() {
 		ssbd_account_bounce( 'register', 'mismatch', $redirect, $keep );
 	}
 
+	$ip       = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? 'unknown' ) );
+	$rate_key = 'ssbd_register_rate_' . hash( 'sha256', $ip );
+	$attempts = (int) get_transient( $rate_key );
+	if ( $attempts >= 3 ) {
+		ssbd_account_bounce( 'register', 'rate', $redirect, $keep );
+	}
+	set_transient( $rate_key, $attempts + 1, HOUR_IN_SECONDS );
+
 	$user_id = ssbd_create_reader( $email, $name, $password );
 
 	if ( is_wp_error( $user_id ) ) {
 		ssbd_account_bounce( 'register', $user_id->get_error_code(), $redirect, $keep );
 	}
 
-	ssbd_sign_in_and_redirect( $user_id, $redirect );
+	if ( ! ssbd_send_account_verification( $user_id, $redirect ) ) {
+		require_once ABSPATH . 'wp-admin/includes/user.php';
+		wp_delete_user( $user_id );
+		ssbd_account_bounce( 'register', 'verify_mail', $redirect, $keep );
+	}
+
+	ssbd_account_bounce( 'login', 'verify_sent', $redirect, array( 'auth_email' => $email ) );
 }
 add_action( 'admin_post_nopriv_ssbd_register', 'ssbd_handle_register' );
 add_action( 'admin_post_ssbd_register', 'ssbd_handle_register' );
@@ -501,6 +660,7 @@ function ssbd_google_callback() {
 
 	if ( $user ) {
 		update_user_meta( $user->ID, 'ssbd_google_id', sanitize_text_field( $data['sub'] ?? '' ) );
+		update_user_meta( $user->ID, 'ssbd_email_verified', '1' );
 		ssbd_sign_in_and_redirect( $user->ID, $redirect );
 	}
 
@@ -521,6 +681,7 @@ function ssbd_google_callback() {
 	 * renders is just a field to keep in sync forever.
 	 */
 	update_user_meta( $user_id, 'ssbd_google_id', sanitize_text_field( $data['sub'] ?? '' ) );
+	update_user_meta( $user_id, 'ssbd_email_verified', '1' );
 
 	ssbd_sign_in_and_redirect( $user_id, $redirect );
 }

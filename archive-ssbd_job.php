@@ -23,7 +23,7 @@ $ssbd_date_names = array( 1 => __( 'Past 24 hours', 'ssbd' ), 3 => __( 'Past 3 d
 		<?php ssbd_breadcrumbs(); ?>
 		<?php ssbd_eyebrow( __( 'Careers', 'ssbd' ), true ); ?>
 		<h1><?php esc_html_e( 'International & Remote Jobs', 'ssbd' ); ?></h1>
-		<p><?php esc_html_e( 'Discover verified opportunities from companies worldwide.', 'ssbd' ); ?></p>
+		<p><?php esc_html_e( 'Find current international and remote opportunities from companies worldwide.', 'ssbd' ); ?></p>
 
 		<form class="job-search" id="jobs-filter-form" role="search" method="get" action="<?php echo esc_url( ssbd_jobs_url() ); ?>" data-jobs-filter>
 			<label class="job-filter-field job-filter-search" for="job-s">
@@ -64,6 +64,9 @@ $ssbd_date_names = array( 1 => __( 'Past 24 hours', 'ssbd' ), 3 => __( 'Past 3 d
 			<?php endforeach; ?>
 			<a class="job-saved-link" href="<?php echo esc_url( home_url( '/jobs/saved/' ) ); ?>"><?php esc_html_e( 'Saved jobs', 'ssbd' ); ?></a>
 		</div>
+		<figure class="jobs-featured-image">
+			<img src="<?php echo esc_url( SSBD_URI . '/assets/images/international-remote-jobs.webp' ); ?>" alt="<?php esc_attr_e( 'Male technology professionals collaborating remotely across countries', 'ssbd' ); ?>" width="1200" height="630" fetchpriority="high">
+		</figure>
 	</div>
 </section>
 
@@ -71,8 +74,8 @@ $ssbd_date_names = array( 1 => __( 'Past 24 hours', 'ssbd' ), 3 => __( 'Past 3 d
 	<div class="wrap">
 		<?php if ( $ssbd_categories ) : ?>
 			<div class="job-categories" aria-label="<?php esc_attr_e( 'Job categories', 'ssbd' ); ?>">
-				<?php foreach ( $ssbd_categories as $ssbd_category_item ) : ?>
-					<a class="job-category-card<?php echo $ssbd_category === $ssbd_category_item->slug ? ' is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( 'category', $ssbd_category_item->slug, ssbd_jobs_url() ) ); ?>" data-job-filter-link>
+				<?php foreach ( $ssbd_categories as $ssbd_category_item ) : $ssbd_category_url = get_term_link( $ssbd_category_item ); ?>
+					<a class="job-category-card<?php echo $ssbd_category === $ssbd_category_item->slug ? ' is-active' : ''; ?>" href="<?php echo esc_url( is_wp_error( $ssbd_category_url ) ? ssbd_jobs_url() : $ssbd_category_url ); ?>">
 						<span><?php echo esc_html( $ssbd_category_item->name ); ?></span>
 						<small>
 							<?php
@@ -135,6 +138,18 @@ $ssbd_date_names = array( 1 => __( 'Past 24 hours', 'ssbd' ), 3 => __( 'Past 3 d
 		</div>
 	</div>
 </section>
+
+<?php if ( ! $ssbd_filtered && ! is_paged() ) : ?>
+	<section class="section section--tight section--soft" aria-labelledby="international-jobs-guide">
+		<div class="wrap wrap--narrow entry-content">
+			<h2 id="international-jobs-guide"><?php esc_html_e( 'Finding the right international or remote job', 'ssbd' ); ?></h2>
+			<p><?php esc_html_e( 'Use the category pages to explore roles that match your experience, then review each listing for location limits, working hours, employment type and salary details. A remote position may still restrict applicants to particular countries or time zones, so confirm eligibility before applying.', 'ssbd' ); ?></p>
+			<h3><?php esc_html_e( 'Prepare before you apply', 'ssbd' ); ?></h3>
+			<p><?php esc_html_e( 'Tailor your CV and portfolio to the role, show relevant results, and make your availability and time zone clear. Apply through the employer or source link on the job page, and never send money or sensitive financial information as part of a recruitment process.', 'ssbd' ); ?></p>
+			<p><?php esc_html_e( 'New listings are imported regularly. Save promising roles in your browser and return to compare them before their application deadlines.', 'ssbd' ); ?></p>
+		</div>
+	</section>
+<?php endif; ?>
 
 <?php
 get_footer();
